@@ -1,0 +1,371 @@
+<title>Coaching Express Inscription</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout : une colonne étroite, sections numérotées comme le formulaire papier, bandeau bleu nuit en tête, doré réservé aux actions et au pack choisi */
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --fg: #101a33;
+  --muted: #5a6479;
+  --line: #d9d6cc;
+  --navy: #0e1a36;
+  --on-navy: #f3efe3;
+  --gold: #b8860b;
+  --gold-soft: #f3e7c3;
+  --on-gold: #101a33;
+  --err: #b3261e;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1224; --surface: #121e3a; --fg: #eee9da; --muted: #a2abc0; --line: #27355a;
+    --navy: #060c1a; --on-navy: #f3efe3; --gold: #e0b34a; --gold-soft: #2b2a24; --on-gold: #0a1224; --err: #ff8a80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a1224; --surface: #121e3a; --fg: #eee9da; --muted: #a2abc0; --line: #27355a;
+  --navy: #060c1a; --on-navy: #f3efe3; --gold: #e0b34a; --gold-soft: #2b2a24; --on-gold: #0a1224; --err: #ff8a80;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.5; padding-inline: 16px; padding-block: 0 48px; }
+.wrap { max-width: 640px; margin-inline: auto; }
+header.top { background: var(--navy); color: var(--on-navy); margin-inline: -16px; padding: 28px 16px 26px; }
+header.top .in { max-width: 640px; margin-inline: auto; }
+.kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin: 0 0 8px; }
+h1 { font-family: var(--font-display); font-size: clamp(30px, 8vw, 42px); line-height: 1.05; margin: 0 0 10px; font-weight: 700; text-wrap: balance; }
+header.top p { margin: 0; color: var(--on-navy); opacity: .85; max-width: 52ch; }
+section.card { margin-top: 28px; }
+h2 { font-family: var(--font-display); font-size: 22px; margin: 0 0 4px; text-wrap: balance; }
+h2 .n { color: var(--gold); margin-right: 8px; font-variant-numeric: tabular-nums; }
+.hint { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+label.l, legend { font-size: 14px; font-weight: 700; }
+input[type=text], input[type=tel], input[type=email], input[type=number], select, textarea {
+  font: inherit; color: var(--fg); background: var(--surface); border: 1.5px solid var(--line); border-radius: 8px; padding: 12px; min-height: 48px; width: 100%;
+}
+textarea { min-height: 88px; resize: vertical; }
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible, .opt input:focus-visible + span { outline: 3px solid var(--gold); outline-offset: 2px; }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.opt { position: relative; }
+.opt input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.opt span { display: block; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 15px; min-height: 44px; }
+.opt input:checked + span { border-color: var(--gold); background: var(--gold-soft); font-weight: 700; }
+.packs { display: grid; gap: 10px; }
+.pack { position: relative; display: block; }
+.pack input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.pack .box { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 14px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); }
+.pack input:checked + .box { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+.pack input:focus-visible + .box { outline: 3px solid var(--gold); outline-offset: 2px; }
+.pack .nm { font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.pack .pr { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pack .ds { grid-column: 1 / -1; color: var(--muted); font-size: 14px; }
+.cond { display: none; }
+.cond.show { display: block; }
+.checks { display: grid; gap: 10px; }
+.check { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; }
+.check input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--gold); }
+.total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px; border-radius: 10px; background: var(--navy); color: var(--on-navy); margin-top: 14px; }
+.total b { font-family: var(--font-display); font-size: 24px; color: var(--gold); font-variant-numeric: tabular-nums; }
+.btn { font: inherit; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 22px; border-radius: 10px; border: 0; background: var(--gold); color: var(--on-gold); cursor: pointer; text-decoration: none; width: 100%; font-size: 17px; }
+.btn.alt { background: transparent; color: var(--fg); border: 1.5px solid var(--line); font-size: 15px; min-height: 46px; }
+.error { color: var(--err); font-size: 14px; font-weight: 500; min-height: 0; }
+.field.bad input, .field.bad select, .field.bad textarea { border-color: var(--err); }
+#result { margin-top: 28px; padding: 18px; border: 1.5px solid var(--gold); border-radius: 12px; background: var(--surface); }
+#result pre { white-space: pre-wrap; word-break: break-word; font: inherit; font-size: 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 12px 0; max-height: 260px; overflow: auto; }
+#result .row { display: grid; gap: 10px; }
+.num { font-weight: 700; user-select: all; }
+footer { margin-top: 32px; color: var(--muted); font-size: 13px; }
+@media (prefers-reduced-motion: no-preference) { .pack .box, .opt span { transition: border-color .15s, background .15s; } }
+</style>
+
+<header class="top">
+  <div class="in">
+    <p class="kicker">Cassandra Touré · Coaching Express</p>
+    <h1>Formulaire de souscription</h1>
+    <p>Remplissez ce formulaire pour démarrer votre coaching. Il se termine par un message WhatsApp déjà rédigé, à envoyer à Cassandra. Elle vous guide ensuite pour le paiement et le diagnostic.</p>
+  </div>
+</header>
+
+<div class="wrap">
+<form id="f" novalidate>
+
+  <section class="card">
+    <h2><span class="n">1</span>Vos coordonnées</h2>
+    <div class="grid">
+      <div class="field" id="w-nom"><label class="l" for="nom">Nom</label><input type="text" id="nom" autocomplete="family-name"><span class="error" id="e-nom"></span></div>
+      <div class="field" id="w-prenom"><label class="l" for="prenom">Prénom</label><input type="text" id="prenom" autocomplete="given-name"><span class="error" id="e-prenom"></span></div>
+      <div class="field"><label class="l" for="age">Âge</label><input type="number" id="age" inputmode="numeric" min="14" max="99"></div>
+      <div class="field"><label class="l" for="statut">Profession / statut</label><input type="text" id="statut" placeholder="Étudiant, en recherche d'emploi…"></div>
+      <div class="field"><label class="l" for="ville">Ville / pays</label><input type="text" id="ville" autocomplete="address-level2"></div>
+      <div class="field" id="w-wa"><label class="l" for="wa">Numéro WhatsApp</label><input type="tel" id="wa" inputmode="tel" autocomplete="tel" placeholder="+225 …"><span class="error" id="e-wa"></span></div>
+      <div class="field full"><label class="l" for="email">E-mail</label><input type="email" id="email" autocomplete="email"></div>
+    </div>
+    <fieldset style="margin-top:16px">
+      <legend>1.1 Comment avez-vous connu Coaching Express ?</legend>
+      <div class="opts" id="src">
+        <label class="opt"><input type="radio" name="source" value="WhatsApp / statut"><span>WhatsApp / statut</span></label>
+        <label class="opt"><input type="radio" name="source" value="Réseaux sociaux"><span>Réseaux sociaux</span></label>
+        <label class="opt"><input type="radio" name="source" value="Recommandation d'un proche"><span>Recommandation d'un proche</span></label>
+        <label class="opt"><input type="radio" name="source" value="Événement / atelier"><span>Événement / atelier</span></label>
+        <label class="opt"><input type="radio" name="source" value="Autre"><span>Autre</span></label>
+      </div>
+      <div class="field cond" id="src-autre" style="margin-top:10px"><label class="l" for="source-autre">Précisez</label><input type="text" id="source-autre"></div>
+    </fieldset>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">2</span>Votre objectif</h2>
+    <fieldset id="w-obj">
+      <legend>2.1 Pour quel(s) objectif(s) souhaitez-vous être accompagné(e) ?</legend>
+      <div class="opts">
+        <label class="opt"><input type="checkbox" name="objectif" value="Recherche d'emploi"><span>Recherche d'emploi</span></label>
+        <label class="opt"><input type="checkbox" name="objectif" value="CV & entretien"><span>CV &amp; entretien</span></label>
+        <label class="opt"><input type="checkbox" name="objectif" value="Développement personnel"><span>Développement personnel</span></label>
+        <label class="opt"><input type="checkbox" name="objectif" value="Entrepreneuriat"><span>Entrepreneuriat</span></label>
+      </div>
+      <span class="error" id="e-obj"></span>
+    </fieldset>
+    <div class="field" style="margin-top:16px"><label class="l" for="phrase">2.2 Décrivez en une phrase ce que vous voulez atteindre</label><textarea id="phrase"></textarea></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>Votre pack</h2>
+    <p class="hint">Choisissez un seul pack. Un doute ? Cassandra vous aide à choisir sur WhatsApp.</p>
+    <fieldset id="w-pack">
+      <legend class="sr" style="position:absolute;left:-9999px">Pack</legend>
+      <div class="packs">
+        <label class="pack"><input type="radio" name="pack" value="Flash" data-p="1000" data-v="0"><span class="box"><span class="nm">Flash</span><span class="pr">1 000 XOF</span><span class="ds">Diagnostic de profil + vos 3 priorités</span></span></label>
+        <label class="pack"><input type="radio" name="pack" value="Basic" data-p="5000" data-v="0"><span class="box"><span class="nm">Basic</span><span class="pr">5 000 XOF</span><span class="ds">Diagnostic approfondi, conseils et plan d'action global</span></span></label>
+        <label class="pack"><input type="radio" name="pack" value="Standard" data-p="7000" data-v="0"><span class="box"><span class="nm">Standard</span><span class="pr">7 000 XOF</span><span class="ds">Diagnostic + livrables selon votre objectif (CV, LinkedIn, pitch, business model…)</span></span></label>
+        <label class="pack"><input type="radio" name="pack" value="Premium" data-p="10000" data-v="1"><span class="box"><span class="nm">Premium</span><span class="pr">10 000 XOF</span><span class="ds">Pack Standard + 2 séances individuelles en visio</span></span></label>
+        <label class="pack"><input type="radio" name="pack" value="Diamond" data-p="15000" data-v="1"><span class="box"><span class="nm">Diamond</span><span class="pr">15 000 XOF</span><span class="ds">Pack Premium + suivi d'1 mois sur WhatsApp</span></span></label>
+        <label class="pack"><input type="radio" name="pack" value="Gold" data-p="20000" data-v="1"><span class="box"><span class="nm">Gold</span><span class="pr">20 000 XOF</span><span class="ds">Suivi 3 mois + 5 séances visio + 3 ateliers + livre offert</span></span></label>
+        <label class="pack"><input type="radio" name="pack" value="VIP" data-p="25000" data-v="1"><span class="box"><span class="nm">VIP</span><span class="pr">25 000 XOF</span><span class="ds">Parcours sur-mesure 3 mois + aide au réseautage</span></span></label>
+      </div>
+      <span class="error" id="e-pack"></span>
+    </fieldset>
+    <p class="hint" style="margin-top:12px">Pack Flash : diagnostic standard. Packs Basic à VIP : diagnostic approfondi, transmis après votre inscription.</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>Options et services complémentaires</h2>
+    <p class="hint">Cochez ce qui vous intéresse.</p>
+    <div class="checks">
+      <label class="check"><input type="checkbox" name="option" value="Livre « Aller au bout de son idée » (offert avec le pack Gold)"><span>Livre « Aller au bout de son idée » (offert avec le pack Gold)</span></label>
+      <label class="check"><input type="checkbox" name="option" value="Paiement en plusieurs fois (à partir du pack Premium)" id="opt-multi"><span>Paiement en plusieurs fois (à partir du pack Premium)</span></label>
+      <label class="check"><input type="checkbox" name="option" value="Pack Entrepreneur (sur devis)"><span>Pack Entrepreneur : structurer et lancer mon projet (sur devis)</span></label>
+      <label class="check"><input type="checkbox" name="option" value="Pack Leadership (sur devis)"><span>Pack Leadership : développer ma posture de leader (sur devis)</span></label>
+      <label class="check"><input type="checkbox" name="option" value="Parrainage : je viens de la part d'un proche" id="opt-p1"><span>Offre parrainage : je viens de la part d'un proche</span></label>
+      <label class="check"><input type="checkbox" name="option" value="Parrainage : je souhaite parrainer un proche" id="opt-p2"><span>Offre parrainage : je souhaite parrainer un proche</span></label>
+    </div>
+    <div class="field cond" id="w-parrain" style="margin-top:14px"><label class="l" for="parrain">Nom du parrain ou du filleul</label><input type="text" id="parrain"></div>
+    <div class="field cond" id="w-echeances" style="margin-top:14px"><label class="l" for="echeances">Échéances souhaitées (paiement en plusieurs fois)</label><input type="text" id="echeances" placeholder="Ex : moitié maintenant, moitié dans 2 semaines"></div>
+  </section>
+
+  <section class="card cond" id="s-dispo">
+    <h2><span class="n">5</span>Vos disponibilités</h2>
+    <p class="hint">Pour les packs avec séances visio (Premium, Diamond, Gold, VIP).</p>
+    <fieldset>
+      <legend>5.1 Jours préférés</legend>
+      <div class="opts">
+        <label class="opt"><input type="checkbox" name="jour" value="Lundi"><span>Lundi</span></label>
+        <label class="opt"><input type="checkbox" name="jour" value="Mardi"><span>Mardi</span></label>
+        <label class="opt"><input type="checkbox" name="jour" value="Mercredi"><span>Mercredi</span></label>
+        <label class="opt"><input type="checkbox" name="jour" value="Jeudi"><span>Jeudi</span></label>
+        <label class="opt"><input type="checkbox" name="jour" value="Vendredi"><span>Vendredi</span></label>
+        <label class="opt"><input type="checkbox" name="jour" value="Samedi"><span>Samedi</span></label>
+        <label class="opt"><input type="checkbox" name="jour" value="Dimanche"><span>Dimanche</span></label>
+      </div>
+    </fieldset>
+    <fieldset style="margin-top:16px">
+      <legend>5.2 Créneaux préférés</legend>
+      <div class="opts">
+        <label class="opt"><input type="checkbox" name="creneau" value="Matin (8h-12h)"><span>Matin (8h-12h)</span></label>
+        <label class="opt"><input type="checkbox" name="creneau" value="Après-midi (12h-17h)"><span>Après-midi (12h-17h)</span></label>
+        <label class="opt"><input type="checkbox" name="creneau" value="Soir (17h-21h)"><span>Soir (17h-21h)</span></label>
+      </div>
+    </fieldset>
+    <div class="grid" style="margin-top:16px">
+      <div class="field"><label class="l" for="fuseau">Fuseau / pays</label><input type="text" id="fuseau" placeholder="Ex : Abidjan (GMT)"></div>
+      <div class="field"><label class="l" for="appareil">Appareil pour la visio</label><input type="text" id="appareil" placeholder="Téléphone, ordinateur…"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n" id="n-pay">5</span>Paiement</h2>
+    <p class="hint">Les modalités et coordonnées de paiement vous sont communiquées par votre coach après validation de votre inscription. Vous lui enverrez ensuite la capture de votre paiement.</p>
+    <div class="field">
+      <label class="l" for="mode">Mode de paiement souhaité</label>
+      <select id="mode">
+        <option value="">Choisir</option>
+        <option>Mobile Money Orange</option>
+        <option>Mobile Money MTN</option>
+        <option>Mobile Money Moov</option>
+        <option>Wave</option>
+        <option>Espèces</option>
+        <option>Virement bancaire</option>
+        <option>Autre</option>
+      </select>
+    </div>
+    <div class="field cond" id="w-mode-autre" style="margin-top:12px"><label class="l" for="mode-autre">Précisez</label><input type="text" id="mode-autre"></div>
+    <div class="total"><span>Montant à payer</span><b id="montant">0 XOF</b></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="n" id="n-eng">6</span>Engagements</h2>
+    <div class="checks" id="w-eng">
+      <label class="check"><input type="checkbox" class="eng"><span>J'ai pris connaissance de l'offre Coaching Express et du contenu du pack choisi.</span></label>
+      <label class="check"><input type="checkbox" class="eng"><span>J'accepte que l'accompagnement se déroule 100 % à distance, sur WhatsApp et en visio.</span></label>
+      <label class="check"><input type="checkbox" class="eng"><span>Je m'engage à répondre honnêtement au diagnostic et à fournir les documents demandés (CV, profil LinkedIn…).</span></label>
+      <label class="check"><input type="checkbox" class="eng"><span>J'autorise Cassandra Touré à utiliser mes informations uniquement pour mon accompagnement ; elles restent confidentielles.</span></label>
+      <label class="check"><input type="checkbox" class="eng"><span>Je comprends que les résultats dépendent aussi de mon implication et de ma mise en action.</span></label>
+    </div>
+    <span class="error" id="e-eng"></span>
+    <div class="field" style="margin-top:16px" id="w-sig"><label class="l" for="sig">Signature : tapez votre nom complet</label><input type="text" id="sig" autocomplete="name"><span class="error" id="e-sig"></span></div>
+  </section>
+
+  <div style="margin-top:28px">
+    <button type="submit" class="btn">Préparer mon message WhatsApp</button>
+  </div>
+</form>
+
+<section id="result" hidden aria-live="polite">
+  <h2 style="margin-bottom:6px">Dernière étape</h2>
+  <p class="hint" style="margin-bottom:0">Votre inscription n'est pas encore envoyée. Appuyez sur le bouton doré ci-dessous : WhatsApp s'ouvre avec votre message déjà écrit, il reste à l'envoyer.</p>
+  <pre id="msg"></pre>
+  <div class="row">
+    <a class="btn" id="wa-link" href="#" target="_blank" rel="noopener">Ouvrir WhatsApp et envoyer</a>
+    <button type="button" class="btn alt" id="copy">Copier le message</button>
+    <p class="hint" style="margin:0">Si WhatsApp ne s'ouvre pas, copiez le message et envoyez-le au <span class="num">+225 07 19 50 95 26</span>.</p>
+  </div>
+</section>
+
+<footer>Cassandra Touré · Abidjan, Côte d'Ivoire · macassandra.toure@gmail.com · WhatsApp +225 07 19 50 95 26</footer>
+</div>
+
+<script>
+(function () {
+  var NUM = "2250719509526";
+  var $ = function (id) { return document.getElementById(id); };
+  var f = $("f");
+  function checked(name) { return Array.prototype.slice.call(f.querySelectorAll('input[name="' + name + '"]:checked')); }
+  function vals(name) { return checked(name).map(function (i) { return i.value; }); }
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " XOF"; }
+
+  function refresh() {
+    var p = f.querySelector('input[name="pack"]:checked');
+    $("montant").textContent = p ? fmt(+p.dataset.p) : "0 XOF";
+    var visio = p && p.dataset.v === "1";
+    $("s-dispo").classList.toggle("show", !!visio);
+    $("n-pay").textContent = visio ? "6" : "5";
+    $("n-eng").textContent = visio ? "7" : "6";
+    var s = f.querySelector('input[name="source"]:checked');
+    $("src-autre").classList.toggle("show", !!s && s.value === "Autre");
+    $("w-parrain").classList.toggle("show", $("opt-p1").checked || $("opt-p2").checked);
+    $("w-echeances").classList.toggle("show", $("opt-multi").checked);
+    $("w-mode-autre").classList.toggle("show", $("mode").value === "Autre");
+  }
+  f.addEventListener("change", refresh);
+  refresh();
+
+  function setErr(id, wrap, text) {
+    var e = $(id); if (e) e.textContent = text || "";
+    var w = $(wrap); if (w) w.classList.toggle("bad", !!text);
+  }
+
+  function build() {
+    var p = f.querySelector('input[name="pack"]:checked');
+    var L = [];
+    L.push("Bonjour Cassandra, voici ma souscription Coaching Express.");
+    L.push("");
+    L.push("1. COORDONNÉES");
+    L.push("Nom : " + $("nom").value.trim());
+    L.push("Prénom : " + $("prenom").value.trim());
+    if ($("age").value) L.push("Âge : " + $("age").value);
+    if ($("statut").value.trim()) L.push("Profession / statut : " + $("statut").value.trim());
+    if ($("ville").value.trim()) L.push("Ville / pays : " + $("ville").value.trim());
+    L.push("WhatsApp : " + $("wa").value.trim());
+    if ($("email").value.trim()) L.push("E-mail : " + $("email").value.trim());
+    var s = f.querySelector('input[name="source"]:checked');
+    if (s) L.push("Connu via : " + (s.value === "Autre" && $("source-autre").value.trim() ? $("source-autre").value.trim() : s.value));
+    L.push("");
+    L.push("2. OBJECTIF");
+    L.push(vals("objectif").join(", "));
+    if ($("phrase").value.trim()) L.push("En une phrase : " + $("phrase").value.trim());
+    L.push("");
+    L.push("3. PACK");
+    L.push(p.value + " (" + fmt(+p.dataset.p) + ")");
+    var opts = vals("option");
+    if (opts.length) {
+      L.push("");
+      L.push("4. OPTIONS");
+      opts.forEach(function (o) { L.push("- " + o); });
+      if ($("parrain").value.trim() && ($("opt-p1").checked || $("opt-p2").checked)) L.push("Parrain / filleul : " + $("parrain").value.trim());
+      if ($("echeances").value.trim() && $("opt-multi").checked) L.push("Échéances souhaitées : " + $("echeances").value.trim());
+    }
+    if (p.dataset.v === "1") {
+      var j = vals("jour"), c = vals("creneau");
+      if (j.length || c.length || $("fuseau").value.trim() || $("appareil").value.trim()) {
+        L.push("");
+        L.push("5. DISPONIBILITÉS");
+        if (j.length) L.push("Jours : " + j.join(", "));
+        if (c.length) L.push("Créneaux : " + c.join(", "));
+        if ($("fuseau").value.trim()) L.push("Fuseau / pays : " + $("fuseau").value.trim());
+        if ($("appareil").value.trim()) L.push("Appareil visio : " + $("appareil").value.trim());
+      }
+    }
+    L.push("");
+    L.push("PAIEMENT");
+    var m = $("mode").value;
+    if (m === "Autre" && $("mode-autre").value.trim()) m = $("mode-autre").value.trim();
+    if (m) L.push("Mode souhaité : " + m);
+    L.push("Montant : " + fmt(+p.dataset.p));
+    L.push("");
+    L.push("Engagements acceptés. Signé : " + $("sig").value.trim());
+    return L.join("\n");
+  }
+
+  f.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var ok = true, first = null;
+    function need(cond, errId, wrapId, text, el) {
+      setErr(errId, wrapId, cond ? "" : text);
+      if (!cond) { ok = false; if (!first) first = el; }
+    }
+    need($("nom").value.trim(), "e-nom", "w-nom", "Entrez votre nom.", $("nom"));
+    need($("prenom").value.trim(), "e-prenom", "w-prenom", "Entrez votre prénom.", $("prenom"));
+    need(/\d{8,}/.test($("wa").value.replace(/\D/g, "")), "e-wa", "w-wa", "Entrez un numéro WhatsApp valide, avec l'indicatif.", $("wa"));
+    need(checked("objectif").length > 0, "e-obj", "w-obj", "Choisissez au moins un objectif.", $("w-obj"));
+    need(!!f.querySelector('input[name="pack"]:checked'), "e-pack", "w-pack", "Choisissez un pack.", $("w-pack"));
+    var allEng = Array.prototype.every.call(f.querySelectorAll(".eng"), function (c) { return c.checked; });
+    need(allEng, "e-eng", "w-eng", "Cochez tous les engagements pour continuer.", $("w-eng"));
+    need($("sig").value.trim().length > 2, "e-sig", "w-sig", "Tapez votre nom complet pour signer.", $("sig"));
+    if (!ok) { if (first && first.scrollIntoView) first.scrollIntoView({ block: "center" }); return; }
+
+    var text = build();
+    $("msg").textContent = text;
+    $("wa-link").href = "https://wa.me/" + NUM + "?text=" + encodeURIComponent(text);
+    $("result").hidden = false;
+    $("result").scrollIntoView({ block: "start" });
+  });
+
+  $("copy").addEventListener("click", function () {
+    var btn = $("copy"), text = $("msg").textContent;
+    function done(t) { btn.textContent = t; setTimeout(function () { btn.textContent = "Copier le message"; }, 2200); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents($("msg"));
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      done("Message sélectionné : copiez-le");
+    }
+    try { navigator.clipboard.writeText(text).then(function () { done("Message copié"); }, fallback); } catch (e) { fallback(); }
+  });
+})();
+</script>

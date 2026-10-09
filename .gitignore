@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+.env*.local
+*.tsbuildinfo
+next-env.d.ts
+preview/dist/
+
+# Documents de travail confidentiels (cliente, budget) : restent en local
+sources/
+CONTEXTE.md
+plan-site-vitrine-cassandra.md

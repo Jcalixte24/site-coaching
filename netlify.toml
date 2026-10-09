@@ -1,0 +1,23 @@
+# Site statique : aucune compilation, Netlify publie le dossier tel quel.
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Les documents de travail ne doivent jamais être servis
+[[redirects]]
+  from = "/README.md"
+  to = "/"
+  status = 301

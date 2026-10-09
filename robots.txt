@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /connexion
+
+Sitemap: https://jcalixte24.github.io/site-coaching/sitemap.xml

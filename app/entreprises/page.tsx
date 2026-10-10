@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Icon from "@/components/Icon";
-import { Banner, CtaBand, Marquee, Ticks } from "@/components/ui";
+import Icon, { type IconName } from "@/components/Icon";
+import { CtaBand, Fx, Marquee, Ticks } from "@/components/ui";
 import { TALENT, xof } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Acquisition de talents et intégration de stagiaires",
+  title: "Espace employeur · Acquisition de talents et intégration de stagiaires",
   description:
     "Recruter juste. Intégrer vite. Faire performer. Recrutement de stagiaires clé en main à Abidjan : 140 000 XOF HT par profil (tarif nouveau client).",
   alternates: { canonical: "/entreprises" },
@@ -27,33 +27,111 @@ const MODULES = [
   { n: 5, t: "Formations sur-mesure", p: "Toute demande spécifique en management ou pilotage RH.", prix: "Selon cahier des charges" },
 ];
 
+const ENJEUX: { ic: IconName; t: string; p: string }[] = [
+  { ic: "clock", t: "Du temps managers absorbé", p: "Tri des CV, premiers entretiens, relances : des heures prises sur le cœur d'activité." },
+  { ic: "target", t: "Un risque d'erreur de casting", p: "Un profil mal évalué coûte du temps, de l'énergie et de la motivation à l'équipe." },
+  { ic: "compass", t: "Une prise de poste floue", p: "Sans objectifs clairs ni parcours, l'autonomie des stagiaires tarde à venir." },
+];
+
 export default function EntreprisesPage() {
   return (
     <>
-      <Banner
-        crumbs={[{ href: "/entreprises", label: "Entreprises" }]}
-        eyebrow="Acquisition de talents & intégration de stagiaires"
-        title={<>Recruter juste. Intégrer vite. <em>Faire performer.</em></>}
-        lead="Un accompagnement clé en main, de la définition du poste à l'autonomie de vos recrues."
-      >
-        <div className="btn-row mt-m">
-          <Link href="/entreprises/demande" className="btn btn-gold">
-            Déposer une demande <Icon name="arrow" />
-          </Link>
-          <a href="#tarif" className="btn btn-ghost">Voir le tarif</a>
+      {/* ---------- Héros employeur ---------- */}
+      <section className="hero hero-xl hero-light">
+        <Fx />
+        <span className="ghost-word" aria-hidden="true">Recruter</span>
+        <div className="inner">
+          <p className="eyebrow rise">
+            <b>01</b> Espace employeur · Acquisition de talents
+          </p>
+          <h1 className="mega">
+            <span className="ln">
+              <span>Recruter juste.</span>
+            </span>
+            <span className="ln indent">
+              <span>Intégrer vite.</span>
+            </span>
+            <span className="ln">
+              <span>
+                <em>Faire performer.</em>
+              </span>
+            </span>
+          </h1>
+          <div className="hero-mid">
+            <p className="lead rise d2">
+              Un accompagnement clé en main pour recruter et intégrer vos <em>stagiaires et jeunes talents</em> : de la
+              fiche de poste à l&apos;autonomie de vos recrues, avec un seul interlocuteur.
+            </p>
+            <div className="pings" aria-hidden="true">
+              <div className="ping">
+                <i><Icon name="clipboard" /></i>
+                <span>Fiche de poste validée<small>Étape A</small></span>
+              </div>
+              <div className="ping">
+                <i className="green"><Icon name="users" /></i>
+                <span>3 profils en shortlist<small>Tests pratiques validés</small></span>
+              </div>
+              <div className="ping">
+                <i className="blue"><Icon name="target" /></i>
+                <span>Objectifs à 3 mois remis<small>Onboarding</small></span>
+              </div>
+            </div>
+          </div>
+          <div className="hero-meta rise d3">
+            <div>
+              <p className="meta-k">Tarif nouveau client</p>
+              <p className="meta-v">{xof(TALENT.newClientPrice)} <em>HT</em></p>
+            </div>
+            <div>
+              <p className="meta-k">Méthode</p>
+              <p className="meta-v">5 étapes</p>
+            </div>
+            <div>
+              <p className="meta-k">Interlocuteur</p>
+              <p className="meta-v">Un seul</p>
+            </div>
+            <div className="hero-cta">
+              <Link href="/entreprises/demande" className="btn btn-gold">
+                Faire une demande <Icon name="arrow" />
+              </Link>
+              <a href="#tarif" className="btn btn-ghost">Voir le tarif</a>
+            </div>
+          </div>
         </div>
-      </Banner>
+      </section>
 
       <Marquee
         variant="navy-m"
         items={["Marketing", "Commercial", "Logistique", "Community management", "Gestion de marque", "Tout profil junior", "Shortlist qualifiée", "Tests par métier"]}
       />
 
-      {/* ---------- 5 étapes ---------- */}
+      {/* ---------- Vos enjeux ---------- */}
       <section className="sec deco">
         <div className="inner">
           <div className="sec-head rv">
-            <p className="eyebrow">Notre réponse</p>
+            <p className="eyebrow"><b>02</b> Votre enjeu</p>
+            <h2 className="h-l">
+              Recruter des stagiaires, ça paraît simple. <em>Le faire bien, c&apos;est une autre histoire.</em>
+            </h2>
+          </div>
+          <div className="grid-3">
+            {ENJEUX.map((e, i) => (
+              <article className={`card rv d${i}`} key={e.t}>
+                <span className="card-ic"><Icon name={e.ic} /></span>
+                <h3>{e.t}</h3>
+                <p className="muted">{e.p}</p>
+              </article>
+            ))}
+          </div>
+          <p className="lead mt-m rv">Notre mission : vous livrer une shortlist qualifiée et des stagiaires prêts à contribuer.</p>
+        </div>
+      </section>
+
+      {/* ---------- 5 étapes ---------- */}
+      <section className="sec warm" id="methode" style={{ scrollMarginTop: 64 }}>
+        <div className="inner">
+          <div className="sec-head rv">
+            <p className="eyebrow"><b>03</b> Notre réponse</p>
             <h2 className="h-l">
               5 étapes. <em>Un seul interlocuteur.</em>
             </h2>
@@ -80,10 +158,10 @@ export default function EntreprisesPage() {
       </section>
 
       {/* ---------- Avec / sans ---------- */}
-      <section className="sec warm">
+      <section className="sec deco">
         <div className="inner">
           <div className="sec-head rv">
-            <p className="eyebrow">La différence concrète</p>
+            <p className="eyebrow"><b>04</b> La différence concrète</p>
             <h2 className="h-l">
               Avec ou <em>sans accompagnement ?</em>
             </h2>
@@ -120,7 +198,7 @@ export default function EntreprisesPage() {
       <section className="sec" id="tarif" style={{ scrollMarginTop: 64 }}>
         <div className="inner">
           <div className="sec-head rv">
-            <p className="eyebrow">Votre investissement</p>
+            <p className="eyebrow"><b>05</b> Votre investissement</p>
             <h2 className="h-l">
               Un tarif simple : <em>par profil recruté.</em>
             </h2>
@@ -170,10 +248,10 @@ export default function EntreprisesPage() {
       </section>
 
       {/* ---------- Modules ---------- */}
-      <section className="sec warm">
+      <section className="sec warm" id="modules" style={{ scrollMarginTop: 64 }}>
         <div className="inner">
           <div className="sec-head rv">
-            <p className="eyebrow">Pour aller plus loin</p>
+            <p className="eyebrow"><b>06</b> Pour aller plus loin</p>
             <h2 className="h-l">
               Sécuriser votre <em>retour sur investissement.</em>
             </h2>
@@ -200,7 +278,7 @@ export default function EntreprisesPage() {
       <section className="sec navy on-navy">
         <div className="inner">
           <div className="sec-head rv">
-            <p className="eyebrow">Démarrons ensemble</p>
+            <p className="eyebrow"><b>07</b> Démarrons ensemble</p>
             <h2 className="h-l">
               3 étapes pour <em>lancer votre campagne.</em>
             </h2>

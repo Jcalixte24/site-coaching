@@ -17,7 +17,7 @@ const FAITS: { ic: IconName; t: string; p: string }[] = [
   { ic: "clock", t: "30 à 45 minutes", p: "Au calme, en une ou plusieurs fois." },
   { ic: "clipboard", t: "9 parties", p: "Dont un module adapté à votre objectif." },
   { ic: "mic", t: "Écrit ou vocal", p: "Sur WhatsApp, en reprenant le numéro de chaque question (« 3.2 : … »)." },
-  { ic: "lock", t: "Confidentiel", p: "Vos réponses ne sont jamais montrées à une entreprise." },
+  { ic: "lock", t: "Confidentiel", p: "Vos réponses restent entre vous et votre coach." },
 ];
 
 const PARTIES: { t: string; p: string; pour?: string }[] = [

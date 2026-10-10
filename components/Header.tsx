@@ -6,45 +6,60 @@ import { useEffect, useState } from "react";
 import Icon from "./Icon";
 import { waLink } from "@/lib/site";
 
-// La navigation suit l'arborescence du site : chaque rubrique ouvre ses propres pages.
-type Item = { href: string; label: string; sub?: { href: string; label: string; hint: string }[] };
+// Deux univers séparés : un candidat ne voit que l'espace candidat, un employeur que l'espace employeur.
+// Le logo ramène toujours au portail « Qui êtes-vous ? ».
+export type Univers = "candidat" | "employeur" | "neutre";
 
-const NAV: Item[] = [
-  { href: "/", label: "Accueil" },
-  {
-    href: "/coaching",
-    label: "Coaching",
-    sub: [
-      { href: "/coaching", label: "Coaching Express", hint: "L'offre pour les jeunes, 100 % WhatsApp" },
-      { href: "/coaching/packs", label: "Les 6 packs", hint: "De 5 000 à 30 000 XOF, et le test « Quel pack ? »" },
-      { href: "/coaching/diagnostic", label: "Le diagnostic", hint: "Standard ou approfondi : comment ça se passe" },
-      { href: "/coaching/inscription", label: "S'inscrire", hint: "Le formulaire, envoyé sur WhatsApp" },
-      { href: "/paiement", label: "Comment payer", hint: "Mobile Money, Wave : la capture suffit" },
+export function universOf(path: string): Univers {
+  if (path.startsWith("/entreprises")) return "employeur";
+  if (["/coaching", "/paiement", "/faq"].some((p) => path.startsWith(p))) return "candidat";
+  return "neutre";
+}
+
+type L = { href: string; label: string };
+const NAV: Record<Univers, { links: L[]; cta: L; tag: string }> = {
+  candidat: {
+    tag: "Espace candidat",
+    links: [
+      { href: "/coaching", label: "Coaching" },
+      { href: "/coaching/packs", label: "Les packs" },
+      { href: "/coaching/diagnostic", label: "Diagnostic" },
+      { href: "/paiement", label: "Paiement" },
+      { href: "/faq", label: "FAQ" },
     ],
+    cta: { href: "/coaching/inscription", label: "S'inscrire" },
   },
-  {
-    href: "/entreprises",
-    label: "Entreprises",
-    sub: [
-      { href: "/entreprises", label: "Acquisition de talents", hint: "5 étapes, 140 000 XOF HT par profil" },
-      { href: "/entreprises/demande", label: "Demande de recrutement", hint: "Votre besoin et l'estimation en direct" },
+  employeur: {
+    tag: "Espace employeur",
+    links: [
+      { href: "/entreprises", label: "L'offre" },
+      { href: "/entreprises#methode", label: "Méthode" },
+      { href: "/entreprises#tarif", label: "Tarif" },
+      { href: "/entreprises#modules", label: "Modules" },
+      { href: "/a-propos", label: "À propos" },
     ],
+    cta: { href: "/entreprises/demande", label: "Faire une demande" },
   },
-  { href: "/a-propos", label: "À propos" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
-];
+  neutre: {
+    tag: "Talents & Coaching",
+    links: [
+      { href: "/coaching", label: "Espace candidat" },
+      { href: "/entreprises", label: "Espace employeur" },
+      { href: "/a-propos", label: "À propos" },
+      { href: "/contact", label: "Contact" },
+    ],
+    cta: { href: "/contact", label: "Nous écrire" },
+  },
+};
 
-// Rubriques rattachées : /paiement fait partie du parcours Coaching
-const SECTION_OF: Record<string, string> = { "/paiement": "/coaching" };
-
-export function Brand() {
+export function Brand({ tag = "Talents & Coaching" }: { tag?: string }) {
   return (
     <>
-      <span className="brand-mark" aria-hidden="true">CT</span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="brand-logo" src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.svg`} alt="" width={30} height={40} />
       <span className="brand-txt">
         <b>Cassandra Touré</b>
-        <span>Talents &amp; Coaching</span>
+        <span>{tag}</span>
       </span>
     </>
   );
@@ -52,16 +67,14 @@ export function Brand() {
 
 export default function Header() {
   const path = usePathname();
+  const u = universOf(path);
+  const { links, cta, tag } = NAV[u];
   const [open, setOpen] = useState(false);
   const [solid, setSolid] = useState(false);
-  const [drop, setDrop] = useState<string | null>(null);
 
+  useEffect(() => setOpen(false), [path]);
   useEffect(() => {
-    setOpen(false);
-    setDrop(null);
-  }, [path]);
-  useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > 40);
+    const onScroll = () => setSolid(window.scrollY > 30);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -69,64 +82,30 @@ export default function Header() {
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        setDrop(null);
-      }
+      if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const section = SECTION_OF[path] ?? path;
-  const inSection = (href: string) => (href === "/" ? path === "/" : section.startsWith(href));
-  const isPage = (href: string) => path === href || path === href + "/";
+  const isActive = (href: string) => !href.includes("#") && (path === href || path === href + "/");
 
   return (
     <>
-      <header className={`nav${solid ? " solid" : ""}`}>
+      <header className={`nav${solid ? " solid" : ""}`} data-univers={u}>
         <div className="inner nav-in">
-          <Link href="/" className="brand" aria-label="Cassandra Touré, accueil">
-            <Brand />
+          <Link href="/" className="brand" aria-label="Cassandra Touré, retour à l'accueil">
+            <Brand tag={tag} />
           </Link>
           <nav className="nav-links" aria-label="Navigation principale">
-            {NAV.map((l) =>
-              l.sub ? (
-                <div
-                  key={l.href}
-                  className={`dd${drop === l.href ? " open" : ""}`}
-                  onMouseEnter={() => setDrop(l.href)}
-                  onMouseLeave={() => setDrop(null)}
-                >
-                  <button
-                    type="button"
-                    className="dd-btn"
-                    aria-expanded={drop === l.href}
-                    aria-controls={`dd-${l.label}`}
-                    aria-current={inSection(l.href) ? "page" : undefined}
-                    onClick={() => setDrop(drop === l.href ? null : l.href)}
-                  >
-                    {l.label}
-                    <svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.6" /></svg>
-                  </button>
-                  <div className="dd-menu" id={`dd-${l.label}`}>
-                    {l.sub.map((s) => (
-                      <Link key={s.href} href={s.href} aria-current={isPage(s.href) ? "page" : undefined}>
-                        <b>{s.label}</b>
-                        <small>{s.hint}</small>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <Link key={l.href} href={l.href} aria-current={inSection(l.href) ? "page" : undefined}>
-                  {l.label}
-                </Link>
-              )
-            )}
-            <a className="btn btn-wa" href={waLink()} target="_blank" rel="noopener">
-              <Icon name="whatsapp" /> WhatsApp
-            </a>
+            {links.map((l) => (
+              <Link key={l.href} href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>
+                {l.label}
+              </Link>
+            ))}
+            <Link className="btn btn-gold" href={cta.href}>
+              {cta.label}
+            </Link>
           </nav>
           <button
             className="burger"
@@ -143,35 +122,26 @@ export default function Header() {
       <div className={`mob${open ? " open" : ""}`} id="mob" role="dialog" aria-modal="true" aria-label="Menu">
         <div className="mob-top">
           <Link href="/" className="brand">
-            <Brand />
+            <Brand tag={tag} />
           </Link>
           <button className="mob-close" aria-label="Fermer le menu" onClick={() => setOpen(false)}>
             <Icon name="close" />
           </button>
         </div>
         <nav aria-label="Navigation mobile">
-          {NAV.map((l) => (
-            <div key={l.href} className="mob-group">
-              <Link href={l.href} aria-current={inSection(l.href) ? "page" : undefined}>
-                {l.label}
-              </Link>
-              {l.sub && (
-                <ul>
-                  {l.sub
-                    .filter((s) => s.href !== l.href)
-                    .map((s) => (
-                      <li key={s.href}>
-                        <Link href={s.href} aria-current={isPage(s.href) ? "page" : undefined}>
-                          {s.label}
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
-              )}
-            </div>
+          {links.map((l) => (
+            <Link key={l.href} href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>
+              {l.label}
+            </Link>
           ))}
+          <Link href="/contact" aria-current={isActive("/contact") ? "page" : undefined}>
+            Contact
+          </Link>
         </nav>
-        <a className="btn btn-wa" href={waLink()} target="_blank" rel="noopener">
+        <Link className="btn btn-gold" href={cta.href}>
+          {cta.label}
+        </Link>
+        <a className="btn btn-wa" href={waLink()} target="_blank" rel="noopener" style={{ marginTop: 12, width: "100%" }}>
           <Icon name="whatsapp" /> Écrire sur WhatsApp
         </a>
       </div>

@@ -4,8 +4,8 @@
    ============================================================ */
 :root {
   /* Polices (chargées par next/font dans app/layout.tsx) */
-  --disp: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --ui: var(--font-dmsans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --disp: var(--font-display), "Montserrat", system-ui, sans-serif;
+  --ui: var(--font-body), "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Bleu nuit */
   --navy: #0e1a36;

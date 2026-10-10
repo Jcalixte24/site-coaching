@@ -37,7 +37,7 @@ export function Banner({
   children?: ReactNode;
 }) {
   return (
-    <section className="banner on-navy">
+    <section className="banner">
       <Fx />
       <span className="ghost-word" aria-hidden="true">
         {ghost ?? crumbs[crumbs.length - 1]?.label}

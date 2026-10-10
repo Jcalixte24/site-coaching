@@ -33,8 +33,8 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     q: "Mes données sont-elles confidentielles ?",
     a: (
       <>
-        Oui. Vos informations servent uniquement à votre accompagnement. Votre dossier de coaching n&apos;est jamais transmis à
-        une entreprise. <Link href="/mentions-legales#donnees">En savoir plus</Link>.
+        Oui. Vos informations servent uniquement à votre accompagnement. Votre dossier de coaching reste entre vous et
+        votre coach. <Link href="/mentions-legales#donnees">En savoir plus</Link>.
       </>
     ),
   },
@@ -47,10 +47,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     q: "Comment fonctionne le parrainage ?",
     a: "Si un proche vous a recommandé, ou si vous souhaitez parrainer quelqu'un, cochez l'option dans le formulaire et indiquez son nom : l'offre parrainage apporte un avantage à vous deux.",
   },
-  {
-    q: "Comment une entreprise voit-elle les candidats ?",
-    a: "Une entreprise ne voit que les jeunes qui ont donné leur accord explicite, et seulement les informations utiles au poste. Les réponses au diagnostic et le dossier de coaching restent privés.",
-  },
+
 ];
 
 const jsonLd = {

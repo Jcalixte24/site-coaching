@@ -36,8 +36,8 @@ const ENJEUX: { ic: IconName; t: string; p: string }[] = [
 ];
 
 const TEMPS = [
-  { t: "Vous choisissez", p: "Votre pack, selon votre objectif et votre budget : de 1 000 à 25 000 XOF." },
-  { t: "Vous faites votre diagnostic", p: "Un questionnaire pour analyser votre profil, vos forces et ce qui bloque." },
+  { t: "Vous choisissez", p: "Votre pack, selon votre objectif et votre budget : de 5 000 à 30 000 XOF." },
+  { t: "Vous faites votre diagnostic", p: "Le diagnostic approfondi : votre profil, vos forces, ce qui bloque." },
   { t: "Cassandra construit votre plan", p: "Recommandations, plan d'action et livrables personnalisés." },
   { t: "Vous passez à l'action", p: "Mise en œuvre accompagnée : séances visio et suivi selon votre pack." },
 ];
@@ -102,7 +102,7 @@ export default function Home() {
             </div>
             <div>
               <p className="meta-k">Coaching dès</p>
-              <p className="meta-v">1&nbsp;000&nbsp;XOF</p>
+              <p className="meta-v">5&nbsp;000&nbsp;XOF</p>
             </div>
             <div className="hero-cta">
               <Link href="/coaching" className="btn btn-gold">
@@ -171,7 +171,7 @@ export default function Home() {
               <div>
                 <span className="pan-k">Je suis un jeune</span>
                 <h3>Coaching Express</h3>
-                <p>Diagnostic, CV optimisé, pitch, simulation d&apos;entretien. 7 packs de 1&nbsp;000 à 25&nbsp;000&nbsp;XOF.</p>
+                <p>Diagnostic, CV optimisé, pitch, simulation d&apos;entretien. 6 packs de 5&nbsp;000 à 30&nbsp;000&nbsp;XOF.</p>
               </div>
               <span className="pan-in">Choisir mon pack <i /></span>
               {/* Une courbe qui monte, marche après marche */}
@@ -231,7 +231,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- Les 7 packs ---------- */}
+      {/* ---------- Les 6 packs ---------- */}
       <section className="sec navy on-navy">
         <div className="inner">
           <div className="sec-head rv">

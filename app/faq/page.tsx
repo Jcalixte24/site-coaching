@@ -16,7 +16,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Combien de temps dure le diagnostic ?",
-    a: "Le diagnostic standard (pack Flash) prend 15 à 20 minutes. Le diagnostic approfondi (packs Basic à VIP) prend 30 à 45 minutes ; vous pouvez le remplir en plusieurs fois.",
+    a: "Tous les packs commencent par le diagnostic approfondi : comptez 30 à 45 minutes, au calme. Vous pouvez répondre par écrit ou en vocal sur WhatsApp, et en plusieurs fois.",
   },
   {
     q: "Comment payer ?",
@@ -28,7 +28,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
       </>
     ),
   },
-  { q: "Puis-je payer en plusieurs fois ?", a: "Oui, à partir du pack Premium (10 000 XOF). Indiquez les échéances souhaitées dans le formulaire d'inscription." },
+  { q: "Puis-je payer en plusieurs fois ?", a: "Oui, à partir du pack Premium (12 000 XOF). Indiquez les échéances souhaitées dans le formulaire d'inscription." },
   {
     q: "Mes données sont-elles confidentielles ?",
     a: (

@@ -163,8 +163,8 @@ body::after {
 @keyframes trace { 0%, 15% { stroke-dashoffset: 1; } 70%, 100% { stroke-dashoffset: 0; } }
 @keyframes pop { 0%, 55% { opacity: 0; transform: scale(0.3); } 80%, 100% { opacity: 1; transform: none; } }
 
-/* ---------- Escalier des 7 packs : on monte en gamme marche par marche ---------- */
-.stairs { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); align-items: end; gap: 8px; padding-top: 56px; }
+/* ---------- Escalier des 6 packs : on monte en gamme marche par marche ---------- */
+.stairs { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); align-items: end; gap: 8px; padding-top: 56px; }
 .stair {
   --rise: calc(150px + var(--i) * 34px);
   position: relative; height: var(--rise); display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
@@ -305,3 +305,23 @@ body::after {
 .mob .mob-group li a { display: flex; min-height: 44px; align-items: center; font-family: var(--ui); font-size: 1rem; padding: 6px 0; border: 0; color: var(--on-navy-dim); }
 .mob .mob-group li a[aria-current="page"] { color: var(--gold); }
 @media (min-width: 960px) and (max-width: 1099px) { .nav-links a:not(.btn), .dd-btn { padding: 10px 7px; letter-spacing: 0.1em; } }
+
+/* ---------- Page diagnostic : faits en bref + les 9 parties ---------- */
+@media (min-width: 900px) { .statband .diag-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.statband .diag-fact { display: flex; align-items: center; gap: 10px; font-size: clamp(1.3rem, 2.2vw, 1.7rem); letter-spacing: -0.01em; }
+.statband .diag-fact svg { width: 26px; height: 26px; flex: none; }
+.statband .diag-facts span { max-width: 28ch; text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 0.92rem; }
+.diag-parts { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+@media (min-width: 900px) { .diag-parts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
+.diag-part { display: grid; grid-template-columns: auto 1fr; gap: 16px; padding: 22px; border-radius: var(--rad); background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); transition: transform 0.25s var(--ease), box-shadow 0.25s, border-color 0.25s; }
+.diag-part:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: rgba(184, 134, 11, 0.45); }
+.diag-part .step-n { font-size: 2.2rem; margin: 0; }
+.diag-part h3 { font-size: 1.15rem; margin-bottom: 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.diag-part h3 .badge { font-family: var(--ui); font-size: 0.7rem; }
+.diag-part p { margin: 0; color: var(--dim); font-size: 0.95rem; }
+.diag-part .chips li { font-size: 0.85rem; padding: 6px 12px; }
+.diag-part:nth-child(6) { background: var(--navy); color: var(--on-navy); border-color: var(--navy); }
+.diag-part:nth-child(6) p { color: var(--on-navy-dim); }
+.diag-part:nth-child(6) .chips li { background: rgba(243, 239, 227, 0.08); border-color: rgba(212, 166, 58, 0.35); color: var(--on-navy); }
+.diag-part:nth-child(6) .chips b { color: var(--gold); }
+@media (min-width: 900px) { .diag-part:nth-child(5) { grid-column: span 2; } .diag-part:nth-child(6) { grid-column: span 3; } }

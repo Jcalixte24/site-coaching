@@ -1,13 +1,13 @@
 "use client";
 
-// Les 7 packs en escalier : chaque marche est plus haute que la précédente et dit ce qu'elle ajoute.
+// Les 6 packs en escalier : chaque marche est plus haute que la précédente et dit ce qu'elle ajoute.
 // On choisit sa marche, le détail du pack s'affiche dessous.
 // Tous les détails sont rendus dans la page (masqués sauf le choisi) pour fonctionner aussi sans hydratation.
 import Link from "next/link";
 import { useState } from "react";
 import Icon from "./Icon";
 import { Ticks } from "./ui";
-import { PACKS, xof } from "@/lib/site";
+import { PACKS, priceLabel, xof } from "@/lib/site";
 
 export default function PackStairs() {
   const [sel, setSel] = useState(2);
@@ -30,7 +30,7 @@ export default function PackStairs() {
             <span className="stair-n" aria-hidden="true">0{i + 1}</span>
             <span className="stair-top">
               <b>{p.name}</b>
-              <span>{xof(p.price)}</span>
+              <span>{priceLabel(p)}</span>
             </span>
             <span className="stair-plus">{p.plus}</span>
           </button>
@@ -49,7 +49,7 @@ export default function PackStairs() {
                 Pack {p.name}
                 {p.featured ? " · le plus complet pour démarrer" : ""}
               </span>
-              <p className="pk-price">{xof(p.price)}</p>
+              <p className="pk-price">{priceLabel(p)}</p>
               <p className="pack-want">« {p.want} »</p>
               <div className="btn-row">
                 <Link href={`/coaching/inscription?pack=${p.id}`} className="btn btn-gold">

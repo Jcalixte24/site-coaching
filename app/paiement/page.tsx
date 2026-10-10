@@ -64,7 +64,7 @@ export default function PaiementPage() {
             <span className="card-ic"><Icon name="wallet" /></span>
             <h3>Payer en plusieurs fois</h3>
             <p className="muted">
-              Possible à partir du pack Premium (10 000 XOF). Indiquez les échéances souhaitées dans le formulaire
+              Possible à partir du pack Premium (12 000 XOF). Indiquez les échéances souhaitées dans le formulaire
               d&apos;inscription.
             </p>
           </article>

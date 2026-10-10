@@ -17,12 +17,17 @@ export function waLink(text?: string) {
   return text ? `${base}?text=${encodeURIComponent(text)}` : base;
 }
 
+// Prix affiché d'un pack : « 25 000 XOF / mois » pour les parcours mensuels
+export function priceLabel(p: { price: number; monthly?: boolean }) {
+  return xof(p.price) + (p.monthly ? "\u00a0/\u00a0mois" : "");
+}
+
 export function xof(n: number) {
   // Espaces insécables : un prix ne se coupe jamais en fin de ligne.
   return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0") + "\u00a0XOF";
 }
 
-export type PackId = "flash" | "basic" | "standard" | "premium" | "diamond" | "gold" | "vip";
+export type PackId = "basic" | "standard" | "premium" | "diamond" | "gold" | "vip";
 
 export type Pack = {
   id: PackId;
@@ -36,32 +41,15 @@ export type Pack = {
   detailTitle: "Vos livrables" | "En pratique";
   details: string[];
   visio: boolean;
-  diagnostic: "standard" | "approfondi";
+  monthly?: boolean; // prix par mois (Gold, VIP : parcours de 3 mois)
+  diagnostic: "approfondi";
   featured?: boolean;
 };
 
 export const PACKS: Pack[] = [
   {
-    id: "flash",
-    plus: "Diagnostic + vos 3 priorités",
-    name: "Flash",
-    price: 1000,
-    subtitle: "Votre diagnostic, rien d'autre",
-    want: "Je veux juste savoir où j'en suis.",
-    short: "Diagnostic de profil + vos 3 priorités",
-    gets: [
-      "Questionnaire de diagnostic envoyé par WhatsApp",
-      "Analyse de votre profil : forces, compétences, axes de progression",
-      "Compte rendu personnalisé",
-    ],
-    detailTitle: "Vos livrables",
-    details: ["Fiche diagnostic de profil (PDF)", "Vos 3 priorités pour avancer"],
-    visio: false,
-    diagnostic: "standard",
-  },
-  {
     id: "basic",
-    plus: "+ Plan d'action global",
+    plus: "Diagnostic approfondi + plan d'action",
     name: "Basic",
     price: 5000,
     subtitle: "Voir clair et savoir quoi faire",
@@ -109,7 +97,7 @@ export const PACKS: Pack[] = [
     id: "premium",
     plus: "+ 2 séances visio",
     name: "Premium",
-    price: 10000,
+    price: 12000,
     subtitle: "Être accompagné pas à pas",
     want: "Je veux être coaché en direct et m'entraîner.",
     short: "Pack Standard + 2 séances individuelles en visio",
@@ -131,7 +119,7 @@ export const PACKS: Pack[] = [
     id: "diamond",
     plus: "+ Suivi sur 1 mois",
     name: "Diamond",
-    price: 15000,
+    price: 18000,
     subtitle: "Tenir dans la durée",
     want: "Je veux un suivi pour ne pas lâcher.",
     short: "Pack Premium + suivi d'1 mois sur WhatsApp",
@@ -150,7 +138,7 @@ export const PACKS: Pack[] = [
     id: "gold",
     plus: "+ 3 mois, 5 séances, 3 ateliers",
     name: "Gold",
-    price: 20000,
+    price: 25000,
     subtitle: "Un suivi sur 3 mois",
     want: "Je veux une transformation complète : séances, ateliers, suivi 3 mois.",
     short: "Suivi 3 mois + 5 séances visio + 3 ateliers + livre offert",
@@ -161,13 +149,14 @@ export const PACKS: Pack[] = [
       "Livre offert : « Aller au bout de son idée »",
     ],
     visio: true,
+    monthly: true,
     diagnostic: "approfondi",
   },
   {
     id: "vip",
     plus: "+ Sur-mesure et réseau",
     name: "VIP",
-    price: 25000,
+    price: 30000,
     subtitle: "Le parcours sur-mesure",
     want: "Je veux un parcours 100 % sur-mesure et un réseau.",
     short: "Parcours sur-mesure 3 mois + aide au réseautage",
@@ -179,6 +168,7 @@ export const PACKS: Pack[] = [
       "Plan de développement de votre réseau et de votre visibilité",
     ],
     visio: true,
+    monthly: true,
     diagnostic: "approfondi",
   },
 ];

@@ -7,7 +7,7 @@ import { OBJECTIFS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Coaching Express : CV, entretien, emploi, entrepreneuriat",
   description:
-    "Un plan, des outils, un coach. Coaching Express 100 % WhatsApp pour les jeunes : diagnostic, CV optimisé ATS, LinkedIn, pitch, business model. Dès 1 000 XOF.",
+    "Un plan, des outils, un coach. Coaching Express 100 % WhatsApp pour les jeunes : diagnostic, CV optimisé ATS, LinkedIn, pitch, business model. Dès 5 000 XOF.",
   alternates: { canonical: "/coaching" },
 };
 
@@ -35,11 +35,11 @@ export default function CoachingPage() {
         crumbs={[{ href: "/coaching", label: "Coaching Express" }]}
         eyebrow="Coaching Express · 100 % WhatsApp"
         title={<>Un plan, des outils, un coach. <em>Pour atteindre votre objectif plus vite.</em></>}
-        lead="Sans déplacement : votre coaching tient dans votre poche. De 1 000 à 25 000 XOF selon votre besoin."
+        lead="Sans déplacement : votre coaching tient dans votre poche. De 5 000 à 30 000 XOF selon votre besoin."
       >
         <div className="btn-row mt-m">
           <Link href="/coaching/packs" className="btn btn-gold">
-            Voir les 7 packs <Icon name="arrow" />
+            Voir les 6 packs <Icon name="arrow" />
           </Link>
           <Link href="/coaching/packs#quel-pack" className="btn btn-ghost">
             Quel pack pour moi ?
@@ -163,8 +163,8 @@ export default function CoachingPage() {
           </div>
           <ol className="steps four" style={{ listStyle: "none", padding: 0, margin: 0 }}>
             {[
-              ["Vous choisissez", "Votre pack, selon votre objectif et votre budget : de 1 000 à 25 000 XOF."],
-              ["Vous faites votre diagnostic", "Un questionnaire pour analyser votre profil. Standard pour Flash, approfondi de Basic à VIP."],
+              ["Vous choisissez", "Votre pack, selon votre objectif et votre budget : de 5 000 à 30 000 XOF."],
+              ["Vous faites votre diagnostic", "Le diagnostic approfondi, inclus dans tous les packs, pour analyser votre profil."],
               ["Cassandra construit votre plan", "Recommandations, plan d'action et livrables personnalisés."],
               ["Vous passez à l'action", "Mise en œuvre accompagnée : séances visio et suivi selon votre pack."],
             ].map(([t, p], i) => (

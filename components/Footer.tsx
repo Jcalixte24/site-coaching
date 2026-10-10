@@ -21,7 +21,7 @@ export default function Footer() {
             <h2>Jeunes</h2>
             <ul>
               <li><Link href="/coaching">Coaching Express</Link></li>
-              <li><Link href="/coaching/packs">Les 7 packs</Link></li>
+              <li><Link href="/coaching/packs">Les 6 packs</Link></li>
               <li><Link href="/coaching/inscription">S&apos;inscrire</Link></li>
               <li><Link href="/paiement">Comment payer</Link></li>
             </ul>

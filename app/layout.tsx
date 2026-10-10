@@ -25,7 +25,7 @@ const dmSans = DM_Sans({
 });
 
 const description =
-  "Coaching Express pour les jeunes (CV, entretien, entrepreneuriat, 100 % WhatsApp, dès 1 000 XOF) et recrutement de stagiaires qualifiés pour les entreprises, à Abidjan.";
+  "Coaching Express pour les jeunes (CV, entretien, entrepreneuriat, 100 % WhatsApp, dès 5 000 XOF) et recrutement de stagiaires qualifiés pour les entreprises, à Abidjan.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),

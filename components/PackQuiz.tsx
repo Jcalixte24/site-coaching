@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import Icon from "./Icon";
-import { PACKS, xof, type PackId } from "@/lib/site";
+import { PACKS, priceLabel, xof, type PackId } from "@/lib/site";
 
 // « Quel pack est fait pour vous ? » : une phrase « Je veux… » par pack, on recommande celui qui correspond.
 export default function PackQuiz() {
@@ -39,7 +39,7 @@ export default function PackQuiz() {
             <div>
               <span className="pack-name">Pack recommandé</span>
               <p className="pack-price">
-                {pack.name} · {xof(pack.price)}
+                {pack.name} · {priceLabel(pack)}
               </p>
               <p className="muted mb-0">{pack.short}</p>
             </div>

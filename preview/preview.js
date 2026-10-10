@@ -3,17 +3,17 @@
 (function () {
   var NUM = "2250719509526";
   var PACKS = [
-    { id: "flash", name: "Flash", price: 1000, short: "Diagnostic de profil + vos 3 priorités", visio: false },
     { id: "basic", name: "Basic", price: 5000, short: "Diagnostic approfondi, conseils et plan d'action global", visio: false },
     { id: "standard", name: "Standard", price: 7000, short: "Diagnostic + livrables selon votre objectif (CV, LinkedIn, pitch, business model…)", visio: false },
-    { id: "premium", name: "Premium", price: 10000, short: "Pack Standard + 2 séances individuelles en visio", visio: true },
-    { id: "diamond", name: "Diamond", price: 15000, short: "Pack Premium + suivi d'1 mois sur WhatsApp", visio: true },
-    { id: "gold", name: "Gold", price: 20000, short: "Suivi 3 mois + 5 séances visio + 3 ateliers + livre offert", visio: true },
-    { id: "vip", name: "VIP", price: 25000, short: "Parcours sur-mesure 3 mois + aide au réseautage", visio: true },
+    { id: "premium", name: "Premium", price: 12000, short: "Pack Standard + 2 séances individuelles en visio", visio: true },
+    { id: "diamond", name: "Diamond", price: 18000, short: "Pack Premium + suivi d'1 mois sur WhatsApp", visio: true },
+    { id: "gold", name: "Gold", price: 25000, monthly: true, short: "Suivi 3 mois + 5 séances visio + 3 ateliers + livre offert", visio: true },
+    { id: "vip", name: "VIP", price: 30000, monthly: true, short: "Parcours sur-mesure 3 mois + aide au réseautage", visio: true },
   ];
   var ROOT = document.documentElement.getAttribute("data-root") || "";
   function $(id) { return document.getElementById(id); }
   function xof(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " XOF"; }
+  function price(p) { return xof(p.price) + (p.monthly ? "\u00a0/\u00a0mois" : ""); }
   function wa(t) { return "https://wa.me/" + NUM + (t ? "?text=" + encodeURIComponent(t) : ""); }
   function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
@@ -29,7 +29,7 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  // ---------- Escalier des 7 packs ----------
+  // ---------- Escalier des 6 packs ----------
   document.querySelectorAll(".stairs-wrap").forEach(function (w) {
     var steps = w.querySelectorAll(".stair");
     steps.forEach(function (st) {
@@ -111,9 +111,9 @@
         var p = PACKS[i];
         out.innerHTML =
           '<div class="quiz-result"><div><span class="pack-name">Pack recommandé</span>' +
-          '<p class="pack-price">' + p.name + " · " + xof(p.price) + "</p>" +
+          '<p class="pack-price">' + p.name + " · " + price(p) + "</p>" +
           '<p class="muted mb-0">' + esc(p.short) + "</p></div>" +
-          '<div class="btn-row"><a class="btn btn-gold" href="' + ROOT + "coaching/inscription/index.html?pack=" + p.id + '">S\'inscrire à ce pack →</a>' +
+          '<div class="btn-row"><a class="btn btn-gold" href="' + ROOT + "coaching/inscription/?pack=" + p.id + '">S\'inscrire à ce pack →</a>' +
           '<a class="btn btn-ghost" href="#' + p.id + '">Voir le détail</a></div></div>';
       });
     });
@@ -135,7 +135,7 @@
 
     var refresh = function () {
       var p = packOf();
-      $("montant").textContent = p ? xof(p.price) : xof(0);
+      $("montant").textContent = p ? price(p) : xof(0);
       $("s-dispo").hidden = !(p && p.visio);
       $("n-pay").textContent = p && p.visio ? "6" : "5";
       $("n-eng").textContent = p && p.visio ? "7" : "6";
@@ -182,7 +182,7 @@
       if (s) L.push("Connu via : " + (s.value === "Autre" && v("source-autre") ? v("source-autre") : s.value));
       L.push("", "2. OBJECTIF", vals("objectif").join(", "));
       if (v("phrase")) L.push("En une phrase : " + v("phrase"));
-      L.push("", "3. PACK", p.name + " (" + xof(p.price) + ")");
+      L.push("", "3. PACK", p.name + " (" + price(p) + ")");
       var o = vals("option");
       if (o.length) {
         L.push("", "4. OPTIONS");
@@ -203,7 +203,7 @@
       L.push("", "PAIEMENT");
       var m = $("mode").value === "Autre" && v("mode-autre") ? v("mode-autre") : $("mode").value;
       if (m) L.push("Mode souhaité : " + m);
-      L.push("Montant : " + xof(p.price), "", "Engagements acceptés. Signé : " + v("sig"));
+      L.push("Montant : " + price(p), "", "Engagements acceptés. Signé : " + v("sig"));
       showResult(f, L.join("\n"), "Votre inscription n'est pas encore envoyée. Appuyez sur le bouton vert : WhatsApp s'ouvre avec votre message déjà écrit.", "Ouvrir WhatsApp et envoyer");
     });
   }

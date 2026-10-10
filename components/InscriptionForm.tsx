@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Icon from "./Icon";
-import { PACKS, SITE, waLink, xof, type PackId } from "@/lib/site";
+import { PACKS, SITE, waLink, priceLabel, xof, type PackId } from "@/lib/site";
 
 const SOURCES = ["WhatsApp / statut", "Réseaux sociaux", "Recommandation d'un proche", "Événement / atelier", "Autre"];
 const OBJS = ["Recherche d'emploi", "CV & entretien", "Développement personnel", "Entrepreneuriat"];
@@ -95,7 +95,7 @@ export default function InscriptionForm() {
     if (source) L.push("Connu via : " + (source === "Autre" && val("source-autre") ? val("source-autre") : source));
     L.push("", "2. OBJECTIF", all("objectif").join(", "));
     if (val("phrase")) L.push("En une phrase : " + val("phrase"));
-    L.push("", "3. PACK", `${pack.name} (${xof(pack.price)})`);
+    L.push("", "3. PACK", `${pack.name} (${priceLabel(pack)})`);
     const chosen = all("option");
     if (chosen.length) {
       L.push("", "4. OPTIONS");
@@ -116,7 +116,7 @@ export default function InscriptionForm() {
     L.push("", "PAIEMENT");
     const m = mode === "Autre" && val("mode-autre") ? val("mode-autre") : mode;
     if (m) L.push("Mode souhaité : " + m);
-    L.push("Montant : " + xof(pack.price), "");
+    L.push("Montant : " + priceLabel(pack), "");
     L.push("Engagements acceptés. Signé : " + val("sig"));
 
     setMessage(L.join("\n"));
@@ -236,7 +236,7 @@ export default function InscriptionForm() {
                   <input type="radio" name="pack" value={p.id} checked={packId === p.id} onChange={() => setPackId(p.id)} />
                   <span className="box">
                     <span className="nm">{p.name}</span>
-                    <span className="pr">{xof(p.price)}</span>
+                    <span className="pr">{priceLabel(p)}</span>
                     <span className="ds">{p.short}</span>
                   </span>
                 </label>
@@ -245,7 +245,7 @@ export default function InscriptionForm() {
             {err("pack")}
           </fieldset>
           <p className="hint mt-s">
-            Pack Flash : diagnostic standard. Packs Basic à VIP : diagnostic approfondi, transmis après votre inscription.
+            Tous les packs commencent par le diagnostic approfondi, envoyé après votre inscription. Gold et VIP : prix par mois, sur 3 mois.
           </p>
         </section>
 
@@ -331,7 +331,7 @@ export default function InscriptionForm() {
             </div>
           <div className="total" aria-live="polite">
             <span>Montant à payer</span>
-            <b id="montant">{pack ? xof(pack.price) : "0\u00a0XOF"}</b>
+            <b id="montant">{pack ? priceLabel(pack) : "0\u00a0XOF"}</b>
           </div>
         </section>
 

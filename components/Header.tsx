@@ -16,7 +16,7 @@ const NAV: Item[] = [
     label: "Coaching",
     sub: [
       { href: "/coaching", label: "Coaching Express", hint: "L'offre pour les jeunes, 100 % WhatsApp" },
-      { href: "/coaching/packs", label: "Les 7 packs", hint: "De 1 000 à 25 000 XOF, et le test « Quel pack ? »" },
+      { href: "/coaching/packs", label: "Les 6 packs", hint: "De 5 000 à 30 000 XOF, et le test « Quel pack ? »" },
       { href: "/coaching/diagnostic", label: "Le diagnostic", hint: "Standard ou approfondi : comment ça se passe" },
       { href: "/coaching/inscription", label: "S'inscrire", hint: "Le formulaire, envoyé sur WhatsApp" },
       { href: "/paiement", label: "Comment payer", hint: "Mobile Money, Wave : la capture suffit" },

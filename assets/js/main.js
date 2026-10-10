@@ -1,5 +1,5 @@
 // Cassandra Touré · script unique du site (sans framework).
-// Ouverture, navigation, apparitions, compteurs, escalier des packs, test « Quel pack ? », formulaires → WhatsApp.
+// Navigation, apparitions, compteurs, escalier des packs, test « Quel pack ? », formulaires → WhatsApp.
 (function () {
   var NUM = "2250719509526";
   var PACKS = [

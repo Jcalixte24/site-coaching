@@ -26,7 +26,7 @@ const openSans = Open_Sans({
 });
 
 const description =
-  "Cassandra Touré, Talents & Coaching à Abidjan : coaching personnalisé pour les candidats (CV, entretien, emploi, dès 5 000 XOF) et recrutement de stagiaires qualifiés pour les employeurs.";
+  "Cassandra Touré, Talents & Coaching à Abidjan : coaching personnalisé pour les candidats (CV, entretien, emploi) et recrutement de stagiaires qualifiés pour les employeurs.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),

@@ -9,7 +9,7 @@ import { OBJECTIFS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Espace candidat · Coaching Express",
   description:
-    "Coaching personnalisé 100 % WhatsApp pour décrocher un emploi : diagnostic approfondi, CV optimisé ATS, LinkedIn, pitch, simulation d'entretien. 6 packs dès 5 000 XOF.",
+    "Coaching personnalisé 100 % WhatsApp pour décrocher un emploi : diagnostic approfondi, CV optimisé ATS, LinkedIn, pitch, simulation d'entretien. 6 packs selon votre objectif.",
   alternates: { canonical: "/coaching" },
 };
 
@@ -98,8 +98,8 @@ export default function EspaceCandidat() {
               <p className="meta-v">Inclus</p>
             </div>
             <div>
-              <p className="meta-k">Dès</p>
-              <p className="meta-v">5&nbsp;000&nbsp;XOF</p>
+              <p className="meta-k">Packs</p>
+              <p className="meta-v">6 formules</p>
             </div>
             <div className="hero-cta">
               <Link href="/coaching/packs" className="btn btn-gold">

@@ -29,7 +29,7 @@ export default function Portail() {
           <Link href="/coaching" className="choice choice-c rise d2" data-side="-1">
             <span className="k">Espace candidat</span>
             <b>Je cherche un emploi</b>
-            <span>Coaching personnalisé : CV, entretien, plan d&apos;action. Dès 5&nbsp;000&nbsp;XOF.</span>
+            <span>Coaching personnalisé : CV, entretien, plan d&apos;action, 100 % WhatsApp.</span>
             <span className="go">
               Entrer <i />
             </span>

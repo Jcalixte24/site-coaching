@@ -1315,3 +1315,94 @@ body::after { display: none; }
 .about-photo figcaption { position: absolute; left: 14px; right: 14px; bottom: 14px; padding: 14px 18px; border-radius: 16px; background: rgba(42, 28, 20, 0.82); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: var(--on-navy); display: grid; gap: 2px; }
 .about-photo figcaption b { font-family: var(--disp); font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em; }
 .about-photo figcaption span { font-size: 0.8rem; color: var(--gold-2); }
+
+/* ==========================================================================
+   5. SCROLL ET MOTION (piloté par assets/js/scroll.js ; tout est coupé si l'appareil demande moins d'animations)
+   ========================================================================== */
+
+/* Barre de défilement aux couleurs du logo */
+html { scrollbar-width: thin; scrollbar-color: #b8935a #f1ebe1; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: #f1ebe1; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #8c6937, #e4cfa3 50%, #8c6937); border-radius: 10px; border: 3px solid #f1ebe1; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #a07a43, #f0ddb2 50%, #a07a43); }
+::selection { background: var(--gold); color: var(--navy); }
+
+/* Fil de progression doré tout en haut */
+.sprog { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 700; pointer-events: none; }
+.sprog i { display: block; height: 100%; transform-origin: 0 50%; transform: scaleX(var(--sp, 0)); background: var(--metal); box-shadow: 0 0 14px rgba(212, 166, 58, 0.7); }
+
+/* Rail des sections : les points sont placés à la vraie position des sections dans la page */
+.srail { position: fixed; right: 20px; top: 50%; z-index: 450; height: min(54vh, 380px); transform: translateY(-50%); width: 24px; }
+.srail::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(184, 147, 90, 0.45); }
+.srail .sfill { position: absolute; left: 50%; top: 0; width: 2px; margin-left: -1px; height: calc(var(--rp, 0) * 100%); background: var(--metal); border-radius: 2px; }
+.srail .spin { position: absolute; left: 50%; top: calc(var(--rp, 0) * 100%); width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--metal); box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8), 0 0 18px rgba(212, 166, 58, 0.8); }
+.srail button { position: absolute; left: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; padding: 0; border: 0; background: none; cursor: pointer; }
+.srail button::before { content: ""; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: #fff; border: 1.5px solid #b8935a; transition: transform 0.3s var(--ease), background 0.3s; }
+.srail button:hover::before, .srail button.on::before { transform: scale(1.5); background: var(--gold); }
+.srail button span {
+  position: absolute; right: 30px; top: 50%; transform: translate(8px, -50%); padding: 6px 12px; border-radius: 999px; white-space: nowrap;
+  background: rgba(42, 28, 20, 0.92); color: var(--on-navy); font: 700 0.72rem/1 var(--disp); letter-spacing: 0.08em; text-transform: uppercase;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.3s var(--ease);
+}
+.srail button:hover span, .srail button:focus-visible span, .srail button.on span { opacity: 1; transform: translate(0, -50%); }
+.srail button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 50%; }
+@media (max-width: 1099px) { .srail { display: none; } }
+
+/* Titres : les mots montent un par un derrière un masque */
+.mo .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.06em 0.16em; margin: 0 -0.06em -0.16em; }
+.mo .wi { display: inline-block; transform: translateY(112%) rotate(5deg); transform-origin: 0 100%; transition: transform 0.95s var(--ease) calc(var(--i) * 60ms); will-change: transform; }
+.mo .in .wi { transform: none; }
+
+/* Textes d'introduction : ils s'allument mot après mot pendant qu'on défile */
+.mo .sw { opacity: 0.2; transition: opacity 0.4s; }
+.mo .sw.lit { opacity: 1; }
+
+/* Étapes : un fil doré se trace au-dessus des cartes pendant le défilement */
+@media (min-width: 1024px) {
+  .mo ol.steps { position: relative; }
+  .mo ol.steps::before { content: ""; position: absolute; left: 0; right: 0; top: -20px; height: 2px; background: rgba(195, 160, 106, 0.28); }
+  .mo ol.steps::after { content: ""; position: absolute; left: 0; top: -20px; height: 2px; width: calc(var(--p, 0) * 100%); background: var(--metal); box-shadow: 0 0 14px rgba(212, 166, 58, 0.8); }
+}
+.mo .step.act { border-color: rgba(195, 160, 106, 0.75); }
+.mo .step.act .step-n { filter: drop-shadow(0 0 10px rgba(212, 166, 58, 0.6)); }
+
+/* Escalier des packs : chaque marche monte avec le défilement */
+.js.mo .stairs.rv .stair, .js.mo .stairs.rv.on .stair {
+  transform: scaleY(calc(0.12 + 0.88 * var(--s, 1))); opacity: calc(0.15 + 0.85 * var(--s, 1));
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s; transition-delay: 0s;
+}
+@media (max-width: 819px) {
+  .js.mo .stairs.rv .stair, .js.mo .stairs.rv.on .stair { transform: scaleX(calc(0.2 + 0.8 * var(--s, 1))); }
+}
+
+/* Blocs sombres : ils s'ouvrent en plein écran en arrivant (coins arrondis qui disparaissent) */
+.mo .xp { clip-path: inset(0 calc(36px * (1 - var(--e, 1))) round calc(72px * (1 - var(--e, 1)))); }
+
+/* Projecteur doré qui suit la souris sur les blocs sombres */
+.mo .sec.navy, .mo .cta-band, .mo .statband {
+  background-image: radial-gradient(560px circle at var(--mx, -999px) var(--my, -999px), rgba(228, 207, 163, 0.16), transparent 62%);
+  background-repeat: no-repeat;
+}
+
+/* Logo de l'en-tête : il tourne avec le défilement */
+.mo .nav .brand { perspective: 320px; }
+.mo .nav .brand-logo { will-change: transform; }
+
+/* Curseur doré (souris uniquement) */
+.cur, .cur-dot { position: fixed; left: 0; top: 0; z-index: 2500; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity 0.25s, width 0.3s var(--ease), height 0.3s var(--ease), margin 0.3s var(--ease), background 0.3s, border-color 0.3s; }
+.cur { width: 38px; height: 38px; margin: -19px 0 0 -19px; border: 1.5px solid rgba(184, 147, 90, 0.95); }
+.cur-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--gold); }
+.cur.on, .cur-dot.on { opacity: 1; }
+.cur.hot { width: 70px; height: 70px; margin: -35px 0 0 -35px; background: rgba(195, 160, 106, 0.18); border-color: var(--gold-2); }
+.cur.down { width: 26px; height: 26px; margin: -13px 0 0 -13px; background: rgba(195, 160, 106, 0.35); }
+
+/* Transitions entre pages (navigateurs récents) */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: vt-out 0.3s ease both; }
+  ::view-transition-new(root) { animation: vt-in 0.55s var(--ease) both; }
+  .nav { view-transition-name: nav; }
+}
+@keyframes vt-out { to { opacity: 0; transform: scale(0.985); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(16px); } }

@@ -65,6 +65,16 @@
     heads.forEach(function (h) { h.classList.add("in"); });
   }
 
+  // ---------- cartes : elles arrivent en pièces détachées et s'assemblent ----------
+  $$(".card.rv, .quote.rv, .step.rv, .diag-part.rv, .pack-full.rv").forEach(function (el, i) {
+    var s = i % 2 ? 1 : -1;
+    el.classList.add("asm");
+    el.style.setProperty("--ax", s * (30 + (i % 3) * 14) + "px");
+    el.style.setProperty("--ay", 36 + (i % 4) * 8 + "px");
+    el.style.setProperty("--ar", s * (4 + (i % 3) * 2) + "deg");
+    el.style.setProperty("--d", i % 4);
+  });
+
   // ---------- textes qui s'allument ----------
   var scrubs = $$("main .sec-head .lead").filter(function (p) { return p.textContent.length > 40; }).map(function (p) {
     var n = wrapWords(p, "sw", false);

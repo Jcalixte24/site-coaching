@@ -1542,3 +1542,38 @@ html { scrollbar-width: thin; scrollbar-color: #b8935a #f1ebe1; }
   .hero .ghost-word { display: block; font-size: 30vw; right: auto; left: 2vw; bottom: 3.5rem; opacity: 0.8; }
   .hero-cue { display: none; }
 }
+
+/* ==========================================================================
+   Questionnaire en ligne (coaching/mon-diagnostic)
+   ========================================================================== */
+.diag-wrap { max-width: 820px; display: grid; gap: 18px; }
+.diag-prog { position: sticky; top: calc(var(--nav-h) + 8px); z-index: 20; height: 26px; border-radius: 13px; background: #fff; border: 1px solid rgba(184, 147, 90, 0.4); overflow: hidden; box-shadow: 0 8px 24px -14px rgba(42, 28, 20, 0.4); }
+.diag-prog i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--metal); transition: width 0.4s var(--ease); }
+.diag-prog span { position: relative; display: block; text-align: center; font: 700 0.74rem/26px var(--disp); letter-spacing: 0.08em; color: var(--ink, #2a1c14); }
+.dpart { display: grid; gap: 18px; padding: 28px 0 8px; border-top: 1px solid rgba(184, 147, 90, 0.3); }
+.dpart-h { display: flex; align-items: center; gap: 14px; font-size: clamp(1.3rem, 3vw, 1.7rem); }
+.dq { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 8px; }
+.dq legend, .dq > label { font-weight: 700; padding: 0; margin-bottom: 4px; }
+.dq-n { font: 700 0.78rem var(--disp); color: var(--gold-ink); margin-right: 4px; }
+.dq textarea, .dq input[type="text"] { width: 100%; font: inherit; padding: 12px 14px; border-radius: 12px; border: 1.5px solid rgba(140, 105, 55, 0.35); background: #fff; color: inherit; }
+.dq textarea { resize: vertical; min-height: 84px; }
+.dq textarea:focus, .dq input[type="text"]:focus { outline: 0; border-color: var(--gold-ink); box-shadow: 0 0 0 3px rgba(195, 160, 106, 0.3); }
+.dq-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.dq-grid .field span, .dq-other span { display: block; font-size: 0.82rem; color: var(--dim); margin-bottom: 3px; }
+.dq-opts { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.opt-m { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid rgba(140, 105, 55, 0.3); background: #fff; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.opt-m input { width: 20px; height: 20px; accent-color: var(--gold-ink); flex: none; }
+.opt-m:has(input:checked) { border-color: var(--gold-ink); background: #f8efdc; }
+.dq-other { grid-column: 1 / -1; }
+.dq-scale { overflow-x: auto; }
+.dq-scale table { width: 100%; min-width: 440px; border-collapse: collapse; font-size: 0.92rem; }
+.dq-scale th { font: 700 0.8rem var(--disp); color: var(--gold-ink); padding: 4px; }
+.dq-scale td { padding: 8px 4px; border-top: 1px solid rgba(184, 147, 90, 0.22); text-align: center; }
+.dq-scale td:first-child { text-align: left; padding-right: 10px; }
+.dq-scale input { width: 22px; height: 22px; accent-color: var(--gold-ink); }
+.dmod { border: 1.5px solid rgba(140, 105, 55, 0.3); border-radius: 16px; padding: 4px 18px 16px; background: #fffdf8; display: grid; gap: 16px; }
+.dmod summary { cursor: pointer; font: 800 1.05rem var(--disp); padding: 14px 0; list-style: none; }
+.dmod[open] summary { color: var(--gold-ink); }
+.diag-actions { display: grid; gap: 10px; padding-top: 12px; }
+.diag-wrap .result pre { white-space: pre-wrap; max-height: 320px; overflow: auto; font-size: 0.86rem; }
+.hint.err { color: #b3261e; }

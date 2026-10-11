@@ -1306,3 +1306,12 @@ body::after { display: none; }
 /* Apparition au défilement : seuls les éléments hors écran au chargement attendent (contenu toujours visible au repos) */
 .pv-wait { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
 .pv-wait.on { opacity: 1; transform: none; }
+
+
+/* ---------- Portrait de Cassandra (page À propos) ---------- */
+.about-photo { position: relative; margin: 0; width: 100%; max-width: 440px; justify-self: center; isolation: isolate; }
+.about-photo::before { content: ""; position: absolute; inset: 18px -18px -18px 18px; z-index: -1; border-radius: 28px; border: 2px solid var(--gold); opacity: 0.7; }
+.about-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 22%; border-radius: 24px; box-shadow: var(--shadow-lift); display: block; }
+.about-photo figcaption { position: absolute; left: 14px; right: 14px; bottom: 14px; padding: 14px 18px; border-radius: 16px; background: rgba(42, 28, 20, 0.82); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: var(--on-navy); display: grid; gap: 2px; }
+.about-photo figcaption b { font-family: var(--disp); font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em; }
+.about-photo figcaption span { font-size: 0.8rem; color: var(--gold-2); }
